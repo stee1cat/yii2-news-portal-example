@@ -4,15 +4,15 @@
  * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
  */
 
-namespace app\handers;
+namespace app\handlers;
 
 /**
  * Список всех событий
  *
  * Class Events
- * @package app\handers
+ * @package app\handlers
  */
-class Events
+final class Events
 {
 
     const USER_SIGNUP = 'user.signup';

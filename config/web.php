@@ -1,6 +1,6 @@
 <?php
 
-use app\handers\BeforeRequest;
+use app\components\AttachListeners;
 
 $params = require(__DIR__ . '/params.php');
 $services = require(__DIR__ . '/services.php');
@@ -9,8 +9,10 @@ $config = [
     'id' => 'basic',
     'language' => 'ru',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-    'on beforeRequest' => [BeforeRequest::class, 'attachListeners'],
+    'bootstrap' => [
+        'log',
+        AttachListeners::class,
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

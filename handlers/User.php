@@ -4,7 +4,7 @@
  * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
  */
 
-namespace app\handers;
+namespace app\handlers;
 
 use app\models\User as UserModel;
 use Yii;
@@ -14,7 +14,7 @@ use yii\base\Event;
  * Обработчики событий связанные с пользователем
  *
  * Class User
- * @package app\handers
+ * @package app\handlers
  */
 class User
 {

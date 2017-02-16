@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\handers\Events;
+use app\handlers\Events;
 use app\models\SignupForm;
 use app\models\User;
 use Yii;
