@@ -1,11 +1,16 @@
 <?php
 
+use app\handers\BeforeRequest;
+
 $params = require(__DIR__ . '/params.php');
+$services = require(__DIR__ . '/services.php');
 
 $config = [
     'id' => 'basic',
+    'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'on beforeRequest' => [BeforeRequest::class, 'attachListeners'],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -38,14 +43,16 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_c>/<_a>',
+                '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
+                '' => 'site/index',
+                '<_c:[\w\-]+>' => '<_c>/index',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
@@ -66,5 +73,7 @@ if (YII_ENV_DEV) {
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
+
+$config['components'] = array_merge($config['components'], $services);
 
 return $config;

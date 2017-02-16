@@ -2,13 +2,20 @@
 
 namespace app\controllers;
 
+use app\handers\Events;
+use app\models\SignupForm;
+use app\models\User;
 use Yii;
+use yii\base\Event;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\ContactForm;
 
+/**
+ * Class SiteController
+ * @package app\controllers
+ */
 class SiteController extends Controller
 {
     /**
@@ -46,10 +53,6 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
 
@@ -75,9 +78,11 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
+
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -95,31 +100,50 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return string
-     */
-    public function actionContact()
+    public function actionSignup()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+        $model = new SignupForm();
 
-            return $this->refresh();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user = Yii::$app->userService->create($model->login, $model->password);
+
+            if ($user) {
+                \Yii::$app->trigger(Events::USER_SIGNUP, new Event([
+                    'sender' => $user,
+                ]));
+            }
+
+            return $this->redirect('confirm');
         }
-        return $this->render('contact', [
+
+        return $this->render('signup', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
+    public function actionConfirm()
     {
-        return $this->render('about');
+        $code = Yii::$app->request->get('code');
+        $login = Yii::$app->request->get('login');
+
+        if ($login && $code) {
+            $user = User::findOne([
+                'login' => $login,
+                'auth_key' => $code,
+                'email_is_confirmed' => false,
+            ]);
+
+            if ($user) {
+                $user->email_is_confirmed = true;
+                $user->update();
+
+                Yii::$app->user->login($user);
+
+                return $this->redirect('/');
+            }
+        }
+
+        return $this->render('confirm');
     }
+
 }

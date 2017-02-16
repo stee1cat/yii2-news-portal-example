@@ -2,26 +2,28 @@
 
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
+$services = require(__DIR__ . '/services.php');
 
 $config = [
     'id' => 'basic-console',
+    'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
-    'components' => [
-        'cache' => [
+    'components' => array(
+        'cache' => array(
             'class' => 'yii\caching\FileCache',
-        ],
-        'log' => [
-            'targets' => [
-                [
+        ),
+        'log' => array(
+            'targets' => array(
+                array(
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
+                    'levels' => array('error', 'warning'),
+                ),
+            ),
+        ),
         'db' => $db,
-    ],
+    ),
     'params' => $params,
     /*
     'controllerMap' => [
@@ -39,5 +41,7 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
     ];
 }
+
+$config['components'] = array_merge($config['components'], $services);
 
 return $config;

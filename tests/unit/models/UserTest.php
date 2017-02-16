@@ -1,9 +1,13 @@
 <?php
-namespace tests\models;
-use app\models\User;
 
-class UserTest extends \Codeception\Test\Unit
+namespace tests\models;
+
+use app\models\User;
+use Codeception\Test\Unit;
+
+class UserTest extends Unit
 {
+
     public function testFindUserById()
     {
         expect_that($user = User::findIdentity(100));
