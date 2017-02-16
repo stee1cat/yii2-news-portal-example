@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@' . $_SERVER['SERVER_NAME'],
+    'adminEmail' => 'admin@news.local',
 ];

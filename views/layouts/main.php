@@ -35,25 +35,29 @@ AppAsset::register($this);
     ]);
 
     $items = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        [
+            'label' => Yii::t('app', 'Control Panel'),
+            'items' => [
+                ['label' => Yii::t('app', 'Posts'), 'url' => '/admin/post'],
+                ['label' => Yii::t('app', 'Users'), 'url' => '/admin/user'],
+            ],
+            'visible' => true,
+        ],
     ];
 
     if (Yii::$app->user->isGuest) {
         $items = array_merge($items, [
-            ['label' => 'Зарегистрироваться', 'url' => ['/site/signup']],
-            ['label' => 'Войти', 'url' => ['/site/login']],
+            ['label' => Yii::t('app', 'Sign Up'), 'url' => ['/site/signup']],
+            ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']],
         ]);
     }
     else {
         $items = array_merge($items, [(
             '<li>'
             . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->login . ')',
-                ['class' => 'btn btn-link logout']
-            )
+            . Html::submitButton(sprintf('%s (%s)', Yii::t('app', 'Logout'), Yii::$app->user->identity->login), [
+                'class' => 'btn btn-link logout',
+            ])
             . Html::endForm()
             . '</li>'
         )]);

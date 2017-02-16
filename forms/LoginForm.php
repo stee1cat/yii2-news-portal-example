@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\forms;
 
 use Yii;
 use yii\base\Model;
@@ -9,7 +9,7 @@ use yii\base\Model;
  * Форма авторизации
  *
  * Class LoginForm
- * @package app\models
+ * @package app\forms
  */
 class LoginForm extends Model
 {

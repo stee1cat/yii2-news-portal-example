@@ -3,14 +3,14 @@
 namespace app\controllers;
 
 use app\handlers\Events;
-use app\models\SignupForm;
+use app\forms\SignupForm;
 use app\models\User;
 use Yii;
 use yii\base\Event;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\forms\LoginForm;
 
 /**
  * Class SiteController

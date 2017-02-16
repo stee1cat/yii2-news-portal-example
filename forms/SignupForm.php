@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\forms;
 
+use app\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -9,7 +10,7 @@ use yii\base\Model;
  * Форма регистрации
  *
  * Class SignupForm
- * @package app\models
+ * @package app\forms
  */
 class SignupForm extends Model
 {
@@ -39,7 +40,7 @@ class SignupForm extends Model
             ['login', 'unique',
                 'targetClass' => User::class,
                 'targetAttribute' => 'login',
-                'message' => Yii::t('app', 'Пользователь с таким логином уже существует.'),
+                'message' => Yii::t('app', 'User already exists'),
             ],
         ];
     }
@@ -51,8 +52,8 @@ class SignupForm extends Model
     {
         return [
             'login' => Yii::t('app', 'E-mail'),
-            'password' => Yii::t('app', 'Пароль'),
-            'password_confirm' => Yii::t('app', 'Поддтверждение пароля'),
+            'password' => Yii::t('app/models', 'Password'),
+            'password_confirm' => Yii::t('app/forms', 'Password Confirm'),
         ];
     }
 

@@ -55,7 +55,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['created_at', 'updated_at'], 'integer'],
             [['login', 'password_hash', 'access_token', 'password_reset_token'], 'string', 'max' => 255],
             ['login', 'unique',
-                'message' => Yii::t('app', 'Пользователь с таким именем существует.'),
+                'message' => Yii::t('app', 'User already exists'),
             ],
             [['auth_key'], 'string', 'max' => 32],
             [['email_is_confirmed'], 'boolean'],
@@ -69,15 +69,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'created_at' => Yii::t('app', 'Дата создания'),
-            'updated_at' => Yii::t('app', 'Дата изменения'),
-            'login' => Yii::t('app', 'Логин'),
-            'password' => Yii::t('app', 'Пароль'),
-            'auth_key' => Yii::t('app', 'Ключ авторизации'),
-            'access_token' => Yii::t('app', 'Токен'),
-            'password_reset_token' => Yii::t('app', 'Токен сброса пароля'),
-            'email_is_confirmed' => Yii::t('app', 'Флаг подтверждённого e-mail'),
+            'id' => Yii::t('app/models', 'ID'),
+            'created_at' => Yii::t('app/models', 'Created At'),
+            'updated_at' => Yii::t('app/models', 'Updated At'),
+            'login' => Yii::t('app/models', 'Login'),
+            'password' => Yii::t('app/models', 'Password'),
+            'auth_key' => Yii::t('app/models', 'Auth Key'),
+            'access_token' => Yii::t('app/models', 'Access Token'),
+            'password_reset_token' => Yii::t('app/models', 'Password Reset Token'),
+            'email_is_confirmed' => Yii::t('app/models', 'Email Is Confirmed'),
         ];
     }
 
