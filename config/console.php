@@ -2,7 +2,6 @@
 
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
-$services = require(__DIR__ . '/services.php');
 
 $config = [
     'id' => 'basic-console',
@@ -41,7 +40,5 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
     ];
 }
-
-$config['components'] = array_merge($config['components'], $services);
 
 return $config;

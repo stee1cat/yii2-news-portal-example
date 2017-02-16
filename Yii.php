@@ -1,6 +1,7 @@
 <?php
 
-use app\services\UserService;
+use app\components\PostService;
+use app\components\UserService;
 
 /**
  * Yii bootstrap file.
@@ -20,6 +21,7 @@ class Yii extends \yii\BaseYii {
  * Used for properties that are identical for both WebApplication and ConsoleApplication
  *
  * @property UserService $userService
+ * @property PostService $postService
  */
 abstract class BaseApplication extends yii\base\Application {
 }

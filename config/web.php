@@ -1,9 +1,10 @@
 <?php
 
 use app\components\AttachListeners;
+use app\components\PostService;
+use app\components\UserService;
 
 $params = require(__DIR__ . '/params.php');
-$services = require(__DIR__ . '/services.php');
 
 $config = [
     'id' => 'basic',
@@ -61,12 +62,20 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_c>/<_a>',
-                '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
+                '<page:\d+>' => 'site/index',
                 '' => 'site/index',
+                'login' => 'site/login',
+                'signup' => 'site/signup',
+                'confirm' => 'site/confirm',
+
                 '<_c:[\w\-]+>' => '<_c>/index',
+                '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
+                '<_c:[\w\-]+>/<_a:[\w\-]+>' => '<_c>/<_a>',
+                '<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_c>/<_a>',
             ],
         ],
+        'postService' => PostService::class,
+        'userService' => UserService::class,
     ],
     'params' => $params,
 ];
@@ -87,7 +96,5 @@ if (YII_ENV_DEV) {
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
-
-$config['components'] = array_merge($config['components'], $services);
 
 return $config;

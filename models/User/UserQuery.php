@@ -1,27 +1,27 @@
 <?php
 
-namespace app\models\Post;
+namespace app\models\User;
 
 use yii\db\ActiveQuery;
 
 /**
- * This is the ActiveQuery class for [[\app\models\Post]].
+ * This is the ActiveQuery class for [[\app\models\User]].
  *
- * @see \app\models\Post
+ * @see \app\models\User
  */
-class PostQuery extends ActiveQuery
+class UserQuery extends ActiveQuery
 {
 
-    public function published()
+    public function users()
     {
         return $this->andWhere([
-            'status' => PostStatus::PUBLISHED()->getValue(),
+            'not in', 'login', ['admin']
         ]);
     }
 
     /**
      * @inheritdoc
-     * @return \app\models\Post[]|array
+     * @return \app\models\User[]|array
      */
     public function all($db = null)
     {

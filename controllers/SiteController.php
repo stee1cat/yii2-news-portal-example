@@ -4,9 +4,11 @@ namespace app\controllers;
 
 use app\handlers\Events;
 use app\forms\SignupForm;
+use app\models\Post;
 use app\models\User;
 use Yii;
 use yii\base\Event;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -63,7 +65,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $pageSize = Yii::$app->postService->getPageSize();
+
+        $posts = new ActiveDataProvider([
+            'query' => Post::find()->published(),
+            'pagination' => [
+                'pageSize' => $pageSize,
+                'defaultPageSize' => $pageSize,
+                'forcePageParam' => false,
+            ],
+        ]);
+
+        return $this->render('index', [
+            'posts' => $posts,
+        ]);
     }
 
     /**

@@ -4,14 +4,14 @@
  * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
  */
 
-namespace app\services;
+namespace app\components;
 
 use app\models\User;
 use Yii;
 
 /**
  * Class UserService
- * @package app\services
+ * @package app\components
  */
 class UserService
 {
