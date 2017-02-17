@@ -4,10 +4,12 @@ namespace app\controllers\admin;
 
 use app\forms\UserForm;
 use app\handlers\Events;
+use app\rbac\Roles;
 use Yii;
 use app\models\User;
 use yii\base\Event;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,6 +26,15 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => [Roles::ADMIN]
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -1,28 +1,26 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/db.php');
+use yii\helpers\ArrayHelper;
+use yii\log\FileTarget;
 
-$config = [
+$params = require(__DIR__ . '/params.php');
+$common = require(__DIR__ . '/common.php');
+
+$config = ArrayHelper::merge($common, [
     'id' => 'basic-console',
     'language' => 'ru',
-    'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
-    'components' => array(
-        'cache' => array(
-            'class' => 'yii\caching\FileCache',
-        ),
-        'log' => array(
-            'targets' => array(
-                array(
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => array('error', 'warning'),
-                ),
-            ),
-        ),
-        'db' => $db,
-    ),
+    'components' => [
+        'log' => [
+            'targets' => [
+                [
+                    'class' => FileTarget::class,
+                    'levels' => ['error', 'warning'],
+                ],
+            ],
+        ],
+    ],
     'params' => $params,
     /*
     'controllerMap' => [
@@ -31,7 +29,7 @@ $config = [
         ],
     ],
     */
-];
+]);
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment

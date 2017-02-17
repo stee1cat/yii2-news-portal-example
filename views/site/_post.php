@@ -5,6 +5,7 @@
  */
 
 use app\models\Post;
+use app\rbac\Roles;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -18,9 +19,11 @@ use yii\helpers\Url;
     <div class="post__preview-text">
         <?= $model->preview_text; ?>
     </div>
+    <?php if (Yii::$app->user->can(Roles::USER)) { ?>
     <p>
         <a class="btn btn-default" href="<?= Url::to(['/post/view', 'id' => $model->id]); ?>" role="button">
             <?= Yii::t('app', 'View details'); ?> »
         </a>
     </p>
+    <?php } ?>
 </div>

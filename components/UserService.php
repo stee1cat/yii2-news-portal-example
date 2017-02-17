@@ -7,7 +7,9 @@
 namespace app\components;
 
 use app\models\User;
+use app\rbac\Roles;
 use Yii;
+use yii\rbac\DbManager;
 
 /**
  * Class UserService
@@ -16,7 +18,7 @@ use Yii;
 class UserService
 {
 
-    public function create($login, $password = null)
+    public function create($login, $password = null, $role = Roles::USER)
     {
         if (null === $password) {
             $password = $this->generatePassword();
@@ -28,7 +30,13 @@ class UserService
             'password_hash' => Yii::$app->security->generatePasswordHash($password),
         ]);
 
-        return $user->save() ? $user : false;
+        if ($user->save()) {
+            /* @var $authManager DbManager  */
+            $authManager = Yii::$app->authManager;
+            $authManager->assign($authManager->getRole($role), $user->id);
+        }
+
+        return !$user->isNewRecord ? $user : false;
     }
 
     /**

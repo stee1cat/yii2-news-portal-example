@@ -1,15 +1,17 @@
 <?php
 
 use app\components\AttachListeners;
-use app\components\PostService;
-use app\components\UserService;
+use yii\debug\Module;
+use yii\helpers\ArrayHelper;
+use yii\i18n\PhpMessageSource;
+use yii\log\FileTarget;
+use yii\swiftmailer\Mailer;
 
 $params = require(__DIR__ . '/params.php');
+$common = require(__DIR__ . '/common.php');
 
-$config = [
+$config = ArrayHelper::merge($common, [
     'id' => 'basic',
-    'language' => 'ru',
-    'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
         AttachListeners::class,
@@ -18,7 +20,7 @@ $config = [
         'i18n' => [
             'translations' => [
                 'app*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
+                    'class' => PhpMessageSource::class,
                     'basePath' => '@app/messages',
                     'fileMap' => [
                         'app' => 'app.php',
@@ -31,18 +33,15 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'QQ44fldwj-cMGVuLqj_ofNGBHBMP7uuC',
         ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => app\models\User::class,
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+            'class' => Mailer::class,
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
@@ -52,12 +51,11 @@ $config = [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class' => FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -74,24 +72,22 @@ $config = [
                 '<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_c>/<_a>',
             ],
         ],
-        'postService' => PostService::class,
-        'userService' => UserService::class,
     ],
     'params' => $params,
-];
+]);
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
+        'class' => Module::class,
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
+        'class' => yii\gii\Module::class,
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];

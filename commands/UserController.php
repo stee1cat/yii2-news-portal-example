@@ -9,6 +9,7 @@
 namespace app\commands;
 
 use app\models\User;
+use app\rbac\Roles;
 use Yii;
 use yii\console\Controller;
 
@@ -27,7 +28,16 @@ class UserController extends Controller
      */
     public function actionCreateAdmin($password = null)
     {
-        return !!Yii::$app->userService->create('admin', $password);
+        return !!Yii::$app->userService->create('admin', $password, Roles::ADMIN);
+    }
+
+    /**
+     * @param null $password
+     * @return integer
+     */
+    public function actionCreateModerator($password = null)
+    {
+        return !!Yii::$app->userService->create('moderator', $password, Roles::MODERATOR);
     }
 
     /**

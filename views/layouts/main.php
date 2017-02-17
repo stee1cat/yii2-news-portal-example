@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\rbac\Roles;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -38,10 +39,18 @@ AppAsset::register($this);
         [
             'label' => Yii::t('app', 'Control Panel'),
             'items' => [
-                ['label' => Yii::t('app', 'Posts'), 'url' => '/admin/post'],
-                ['label' => Yii::t('app', 'Users'), 'url' => '/admin/user'],
+                [
+                    'label' => Yii::t('app', 'Posts'),
+                    'url' => '/admin/post',
+                    'visible' => Yii::$app->user->can(Roles::MODERATOR),
+                ],
+                [
+                    'label' => Yii::t('app', 'Users'),
+                    'url' => '/admin/user',
+                    'visible' => Yii::$app->user->can(Roles::ADMIN),
+                ],
             ],
-            'visible' => true,
+            'visible' => Yii::$app->user->can(Roles::MODERATOR),
         ],
     ];
 

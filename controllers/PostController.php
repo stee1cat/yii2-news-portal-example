@@ -7,6 +7,8 @@
 namespace app\controllers;
 
 use app\models\Post;
+use app\rbac\Roles;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -16,6 +18,22 @@ use yii\web\NotFoundHttpException;
  */
 class PostController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => [Roles::USER]
+                    ],
+                ],
+            ],
+        ];
+    }
+
 
     public function actionView($id)
     {
