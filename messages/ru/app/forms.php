@@ -5,5 +5,9 @@
  */
 
 return [
+    'Old Password' => 'Старый пароль',
+    'New Password' => 'Новый пароль',
     'Password Confirm' => 'Подтверждение пароля',
+    'New Password Confirm' => 'Подтверждение нового пароля',
+    'Old password is incorrect' => 'Неправильный старый пароль',
 ];

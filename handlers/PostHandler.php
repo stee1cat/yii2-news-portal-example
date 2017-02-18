@@ -7,6 +7,8 @@
 namespace app\handlers;
 
 use app\models\Post as PostModel;
+use app\notifications\Message;
+use Yii;
 use yii\base\Event;
 
 /**
@@ -22,6 +24,13 @@ class PostHandler
     {
         /** @var PostModel $post */
         $post = $event->sender;
+
+        Yii::$app->notifications->notifyAll(new Message([
+            'subject' => Yii::t('app/notifications', 'Published a new post: {title}', [
+                'title' => $post->title,
+            ]),
+            'text' => $post->preview_text,
+        ]));
     }
 
 }

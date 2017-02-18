@@ -9,11 +9,11 @@ use yii\widgets\ActiveForm;
  * @var $model SignupForm
  */
 
-$this->title = 'Регистрация';
+$this->title = Yii::t('app', 'Sign Up');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<h1>Регистрация</h1>
+<h1><?= Html::encode($this->title); ?></h1>
 <div class="signup-form">
 
     <?php $form = ActiveForm::begin(); ?>
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'password_confirm')->passwordInput(); ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Зарегистрироваться'), ['class' => 'btn btn-success']); ?>
+        <?= Html::submitButton(Yii::t('app', 'Sign Up'), ['class' => 'btn btn-success']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

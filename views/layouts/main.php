@@ -52,6 +52,24 @@ AppAsset::register($this);
             ],
             'visible' => Yii::$app->user->can(Roles::MODERATOR),
         ],
+        [
+            'label' => Yii::t('app', 'Profile'),
+            'items' => [
+                [
+                    'label' => Yii::t('app', 'Settings'),
+                    'url' => '/profile',
+                ],
+                [
+                    'label' => Yii::t('app', 'Notifications'),
+                    'url' => '/profile/notification',
+                ],
+                [
+                    'label' => Yii::t('app', 'Change Password'),
+                    'url' => '/profile/change-password',
+                ],
+            ],
+            'visible' => Yii::$app->user->can(Roles::USER),
+        ],
     ];
 
     if (Yii::$app->user->isGuest) {

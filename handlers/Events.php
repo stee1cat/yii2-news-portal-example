@@ -18,6 +18,7 @@ final class Events
     const USER_SIGNUP = 'user.signup';
     const USER_CREATED_BY_ADMIN = 'user.createdByAdmin';
     const USER_UPDATED_BY_ADMIN = 'user.updatedByAdmin';
+    const USER_PASSWORD_CHANGED = 'user.passwordChanged';
 
     const POST_PUBLISHED = 'post.published';
 

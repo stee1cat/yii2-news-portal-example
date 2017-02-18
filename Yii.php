@@ -2,6 +2,7 @@
 
 use app\components\PostService;
 use app\components\UserService;
+use app\notifications\NotificationManager;
 
 /**
  * Yii bootstrap file.
@@ -22,6 +23,7 @@ class Yii extends \yii\BaseYii {
  *
  * @property UserService $userService
  * @property PostService $postService
+ * @property NotificationManager $notifications
  */
 abstract class BaseApplication extends yii\base\Application {
 }

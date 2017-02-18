@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User\UserStatus;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -8,6 +9,8 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
+
+$userStatuses = UserStatus::getOptions();
 ?>
 <div class="user-index">
 
@@ -26,6 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at:datetime',
             'updated_at:datetime',
             'login:email',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) use ($userStatuses) {
+                    return isset($userStatuses[$model->status]) ? $userStatuses[$model->status] : $model->status;
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

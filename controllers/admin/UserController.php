@@ -51,7 +51,7 @@ class UserController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->users(),
+            'query' => User::find()->allUsers(),
         ]);
 
         return $this->render('index', [

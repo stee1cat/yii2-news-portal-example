@@ -2,10 +2,13 @@
 
 namespace app\models;
 
+use app\models\User\Notification;
+use app\models\User\Profile;
 use app\models\User\UserQuery;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -21,7 +24,10 @@ use yii\web\IdentityInterface;
  * @property string $access_token
  * @property string $password_reset_token
  * @property string $password_hash
- * @property boolean $email_is_confirmed
+ * @property integer $status
+ *
+ * @property Profile $profile
+ * @property Notification[] $notifications
  *
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -53,14 +59,12 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['login'], 'trim'],
             [['login', 'password_hash'], 'required'],
-            [['created_at', 'updated_at'], 'integer'],
+            [['created_at', 'updated_at', 'status'], 'integer'],
             [['login', 'password_hash', 'access_token', 'password_reset_token'], 'string', 'max' => 255],
             ['login', 'unique',
                 'message' => Yii::t('app', 'User already exists'),
             ],
             [['auth_key'], 'string', 'max' => 32],
-            [['email_is_confirmed'], 'boolean'],
-            [['email_is_confirmed'], 'default', 'value' => false],
         ];
     }
 
@@ -78,7 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
             'auth_key' => Yii::t('app/models', 'Auth Key'),
             'access_token' => Yii::t('app/models', 'Access Token'),
             'password_reset_token' => Yii::t('app/models', 'Password Reset Token'),
-            'email_is_confirmed' => Yii::t('app/models', 'Email Is Confirmed'),
+            'status' => Yii::t('app/models', 'Status'),
         ];
     }
 
@@ -124,6 +128,22 @@ class User extends ActiveRecord implements IdentityInterface
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getNotifications()
+    {
+        return $this->hasMany(Notification::className(), ['user_id' => 'id']);
     }
 
     /**

@@ -1,9 +1,8 @@
 <?php
 
-use app\components\AttachListeners;
+use app\handlers\AttachListeners;
 use yii\debug\Module;
 use yii\helpers\ArrayHelper;
-use yii\i18n\PhpMessageSource;
 use yii\log\FileTarget;
 use yii\swiftmailer\Mailer;
 
@@ -17,18 +16,6 @@ $config = ArrayHelper::merge($common, [
         AttachListeners::class,
     ],
     'components' => [
-        'i18n' => [
-            'translations' => [
-                'app*' => [
-                    'class' => PhpMessageSource::class,
-                    'basePath' => '@app/messages',
-                    'fileMap' => [
-                        'app' => 'app.php',
-                        'app/model' => 'app/models.php',
-                    ],
-                ],
-            ],
-        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'QQ44fldwj-cMGVuLqj_ofNGBHBMP7uuC',

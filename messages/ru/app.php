@@ -5,6 +5,7 @@
 
 return [
     'Save' => 'Сохранить',
+    'Saved' => 'Сохранено',
     'Update' => 'Обновить',
     'Delete' => 'Удалить',
     'Login' => 'Войти',
@@ -20,5 +21,12 @@ return [
     'Posts' => 'Статьи',
     'Control Panel' => 'Панель управления',
     'View details' => 'Подробнее',
-    'Posts per page' => 'Количество',
+    'Profile' => 'Профиль',
+    'Settings' => 'Настройки',
+    'Notifications' => 'Уведомления',
+    'Change Password' => 'Сменить пароль',
+    'Settings have been updated' => 'Настройки были обновлены.',
+    'Notifications has been updated' => 'Настройки уведомлений были обновлены.',
+    'Notification settings' => 'Настройки уведомлений',
+    'Password has been changed' => 'Пароль был изменён',
 ];

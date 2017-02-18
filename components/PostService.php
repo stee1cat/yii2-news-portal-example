@@ -6,6 +6,8 @@
 
 namespace app\components;
 
+use app\models\User\Profile;
+use Yii;
 use yii\base\Component;
 
 /**
@@ -17,17 +19,23 @@ class PostService extends Component
 
     public $defaultPageSize = 10;
 
-    public $pageSizeInput = 'posts-per-page';
-
     public function getPageSize()
     {
         $value = $this->defaultPageSize;
 
-        if (isset($_COOKIE[$this->pageSizeInput]) && (int) $_COOKIE[$this->pageSizeInput]) {
-            $value = $_COOKIE[$this->pageSizeInput];
+        if (($profile = $this->getUserProfile()) && $profile->posts_per_page) {
+            $value = $profile->posts_per_page;
         }
 
         return $value;
+    }
+
+    /**
+     * @return Profile|null
+     */
+    protected function getUserProfile()
+    {
+        return Yii::$app->user->identity->profile;
     }
 
 }

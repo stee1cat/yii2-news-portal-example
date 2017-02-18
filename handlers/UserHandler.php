@@ -44,6 +44,21 @@ class UserHandler
         $this->sendSignupMessageToNewUser($user);
     }
 
+    public function onPasswordChanged(Event $event)
+    {
+        /** @var UserModel $user */
+        $user = $event->sender;
+
+        Yii::$app->mailer->compose('user-password-changed', [
+                'id' => $user->id,
+                'login' => $user->login,
+            ])
+            ->setFrom(Yii::$app->params['adminEmail'])
+            ->setTo($user->login)
+            ->setSubject(Yii::t('app/mail', 'Password has been changed'))
+            ->send();
+    }
+
     protected function sendSignupMessageToNewUser(UserModel $user)
     {
         Yii::$app->mailer->compose('user-signup', [

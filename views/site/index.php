@@ -5,7 +5,6 @@
  * @var $posts \yii\data\ActiveDataProvider
  */
 
-use app\widgets\PostPageSizeSelector;
 use yii\widgets\ListView;
 
 $this->title = 'Breaking News';
@@ -15,6 +14,6 @@ $this->title = 'Breaking News';
     <?= ListView::widget([
         'dataProvider' => $posts,
         'itemView' => '_post',
-        'summary' => '<div class="summary col-md-12">' . PostPageSizeSelector::widget() . '</div>',
+        'summary' => false,
     ]); ?>
 </div>

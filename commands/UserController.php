@@ -28,7 +28,14 @@ class UserController extends Controller
      */
     public function actionCreateAdmin($password = null)
     {
-        return !!Yii::$app->userService->create('admin', $password, Roles::ADMIN);
+        $admin = Yii::$app->userService->create('admin', $password, Roles::ADMIN);
+
+        if ($admin) {
+            $admin->status = User\UserStatus::ACTIVE()->getValue();
+            $admin->save();
+        }
+
+        return !!$admin;
     }
 
     /**
@@ -37,7 +44,14 @@ class UserController extends Controller
      */
     public function actionCreateModerator($password = null)
     {
-        return !!Yii::$app->userService->create('moderator', $password, Roles::MODERATOR);
+        $moderator = Yii::$app->userService->create('moderator', $password, Roles::MODERATOR);
+
+        if ($moderator) {
+            $moderator->status = User\UserStatus::ACTIVE()->getValue();
+            $moderator->save();
+        }
+
+        return !!$moderator;
     }
 
     /**

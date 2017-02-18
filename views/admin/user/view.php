@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User\UserStatus;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -9,6 +10,8 @@ use yii\widgets\DetailView;
 $this->title = $model->login;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$userStatuses = UserStatus::getOptions();
 ?>
 <div class="user-view">
 
@@ -32,7 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at:datetime',
             'updated_at:datetime',
             'login',
-            'email_is_confirmed:boolean',
+            [
+                'attribute' => 'status',
+                'value' => isset($userStatuses[$model->status]) ? $userStatuses[$model->status] : $model->status,
+            ],
         ],
     ]) ?>
 

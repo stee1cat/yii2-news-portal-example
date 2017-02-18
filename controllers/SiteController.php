@@ -145,11 +145,11 @@ class SiteController extends Controller
             $user = User::findOne([
                 'login' => $login,
                 'auth_key' => $code,
-                'email_is_confirmed' => false,
+                'status' => User\UserStatus::INACTIVE()->getValue(),
             ]);
 
             if ($user) {
-                $user->email_is_confirmed = true;
+                $user->status = User\UserStatus::ACTIVE()->getValue();
                 $user->update();
 
                 Yii::$app->user->login($user);

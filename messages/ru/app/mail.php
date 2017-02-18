@@ -7,4 +7,5 @@
 return [
     'New user registration' => 'Зарегистрировался новый пользователь',
     'Confrim your e-mail address' => 'Подтвердите ваш e-mail адрес',
+    'Password has been changed' => 'Пароль был изменён',
 ];
