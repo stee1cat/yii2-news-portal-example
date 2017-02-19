@@ -2,6 +2,8 @@
 
 use app\components\PostService;
 use app\components\UserService;
+use app\handlers\EventBus;
+use app\handlers\EventManager;
 use app\notifications\NotificationManager;
 
 /**
@@ -23,7 +25,9 @@ class Yii extends \yii\BaseYii {
  *
  * @property UserService $userService
  * @property PostService $postService
- * @property NotificationManager $notifications
+ * @property NotificationManager $notificationManager
+ * @property EventBus $eventBus
+ * @property EventManager $eventManager
  */
 abstract class BaseApplication extends yii\base\Application {
 }

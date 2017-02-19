@@ -1,6 +1,6 @@
 <?php
 
-use app\handlers\AttachListeners;
+use app\handlers\AttachHandlers;
 use yii\debug\Module;
 use yii\helpers\ArrayHelper;
 use yii\log\FileTarget;
@@ -13,7 +13,8 @@ $config = ArrayHelper::merge($common, [
     'id' => 'basic',
     'bootstrap' => [
         'log',
-        AttachListeners::class,
+        'eventManager',
+        AttachHandlers::class,
     ],
     'components' => [
         'request' => [

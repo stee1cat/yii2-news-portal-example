@@ -6,12 +6,19 @@
 
 use app\components\PostService;
 use app\components\UserService;
+use app\handlers\EventBus;
+use app\handlers\EventManager;
+use app\handlers\Events;
+use app\models\Post;
+use app\models\User;
 use app\notifications\BrowserNotificationService;
 use app\notifications\EmailNotificationService;
 use app\notifications\NotificationManager;
 use yii\caching\FileCache;
 use yii\i18n\PhpMessageSource;
 use yii\rbac\DbManager;
+
+require '../handlers/Events.php';
 
 return [
     'language' => 'ru',
@@ -44,7 +51,22 @@ return [
         'db' => require(__DIR__ . '/db.php'),
         'postService' => PostService::class,
         'userService' => UserService::class,
-        'notifications' => [
+        'eventBus' => EventBus::class,
+        'eventManager' => [
+            'class' => EventManager::class,
+            'models' => [
+                Post::class => [
+                    Events::POST_PUBLISHED,
+                ],
+                User::class => [
+                    Events::USER_SIGNUP,
+                    Events::USER_CREATED_BY_ADMIN,
+                    Events::USER_UPDATED_BY_ADMIN,
+                    Events::USER_PASSWORD_CHANGED,
+                ],
+            ],
+        ],
+        'notificationManager' => [
             'class' => NotificationManager::class,
             'services' => [
                 [

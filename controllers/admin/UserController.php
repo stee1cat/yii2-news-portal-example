@@ -84,9 +84,7 @@ class UserController extends Controller
             $user = Yii::$app->userService->create($model->login);
 
             if ($user) {
-                Yii::$app->trigger(Events::USER_CREATED_BY_ADMIN, new Event([
-                    'sender' => $user,
-                ]));
+                $user->trigger(Events::USER_CREATED_BY_ADMIN);
 
                 return $this->redirect(['view', 'id' => $user->id]);
             }
@@ -111,10 +109,7 @@ class UserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            Yii::$app->trigger(Events::USER_UPDATED_BY_ADMIN, new Event([
-                'sender' => $model,
-            ]));
+            $model->trigger(Events::USER_UPDATED_BY_ADMIN);
 
             return $this->redirect(['view', 'id' => $model->id]);
         }

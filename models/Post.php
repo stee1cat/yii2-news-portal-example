@@ -37,7 +37,7 @@ class Post extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -75,7 +75,7 @@ class Post extends ActiveRecord
         parent::afterSave($insert, $changedAttributes);
 
         if (!$changedAttributes['status'] && $this->status == PostStatus::PUBLISHED()->getValue()) {
-            Yii::$app->trigger(Events::POST_PUBLISHED, new Event([
+            $this->trigger(Events::POST_PUBLISHED, new Event([
                 'sender' => $this,
             ]));
         }

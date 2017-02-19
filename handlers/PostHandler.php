@@ -25,7 +25,7 @@ class PostHandler
         /** @var PostModel $post */
         $post = $event->sender;
 
-        Yii::$app->notifications->notifyAll(new Message([
+        Yii::$app->notificationManager->notifyAll(new Message([
             'subject' => Yii::t('app/notifications', 'Published a new post: {title}', [
                 'title' => $post->title,
             ]),

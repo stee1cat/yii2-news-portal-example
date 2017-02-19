@@ -85,10 +85,9 @@ class ProfileController extends Controller
 
         $model = new ChangePasswordForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
             if (Yii::$app->userService->updatePassword($user->getId(), $model->new_password)) {
-                Yii::$app->trigger(Events::USER_PASSWORD_CHANGED, new Event([
-                    'sender' => $user,
-                ]));
+                $user->trigger(Events::USER_PASSWORD_CHANGED);
             }
 
             Yii::$app->session->setFlash('success', Yii::t('app', 'Password has been changed'));
