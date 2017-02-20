@@ -1,7 +1,10 @@
 <?php
 
-use yii\helpers\Html;
+/**
+ * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
+ */
 
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Post */

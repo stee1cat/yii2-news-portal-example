@@ -2,6 +2,7 @@
 
 namespace app\models\User;
 
+use app\models\User;
 use app\rbac\Roles;
 use yii\db\ActiveQuery;
 
@@ -20,17 +21,17 @@ class UserQuery extends ActiveQuery
         ]);
     }
 
-    public function allUsers()
+    public function role($role)
     {
         return $this->join('LEFT JOIN', '{{%user_role}}', 'id = user_id')
             ->andWhere([
-                'item_name' => Roles::USER,
+                'item_name' => $role,
             ]);
     }
 
     /**
      * @inheritdoc
-     * @return \app\models\User[]|array
+     * @return User[]|array
      */
     public function all($db = null)
     {
@@ -39,7 +40,7 @@ class UserQuery extends ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \app\models\Post|array|null
+     * @return User|array|null
      */
     public function one($db = null)
     {

@@ -32,16 +32,10 @@ class RbacController extends Controller
         $authManager->add($groupRule);
 
         // Roles
-        $guest = $authManager->createRole(Roles::GUEST);
-        $guest->description = 'Unauthorized users';
-        $guest->ruleName = $groupRule->name;
-        $authManager->add($guest);
-
         $user = $authManager->createRole(Roles::USER);
         $user->description = 'Users';
         $user->ruleName = $groupRule->name;
         $authManager->add($user);
-        $authManager->addChild($user, $guest);
 
         $moderator = $authManager->createRole(Roles::MODERATOR);
         $moderator->description = 'Moderators';

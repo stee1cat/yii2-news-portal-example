@@ -2,12 +2,10 @@
 
 namespace app\controllers\admin;
 
-use app\forms\UserForm;
-use app\handlers\Events;
+use app\forms\NotificationForm;
 use app\rbac\Roles;
 use Yii;
-use app\models\User;
-use yii\base\Event;
+use app\models\Notification;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -15,9 +13,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * NotificationController implements the CRUD actions for Notification model.
  */
-class UserController extends Controller
+class NotificationController extends Controller
 {
 
     /**
@@ -45,13 +43,13 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
+     * Lists all Notification models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->role(Roles::USER),
+            'query' => Notification::find(),
         ]);
 
         return $this->render('index', [
@@ -60,7 +58,7 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single Notification model.
      * @param integer $id
      * @return mixed
      */
@@ -72,60 +70,64 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Notification model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new UserForm();
+        $data = Yii::$app->request->post();
+        $model = new Notification();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $user = Yii::$app->userService->create($model->login);
+        $notifications = Yii::$app->notificationTemplateManager->getNotifications($model->id);
+        $notificationForm = new NotificationForm();
+        $notificationForm->setNotifications($notifications);
 
-            if ($user) {
-                Yii::$app->eventBus->trigger(Events::USER_CREATED_BY_ADMIN, new Event([
-                    'sender' => $user,
-                ]));
+        if ($model->load($data) && $notificationForm->load($data) && $model->save()) {
+            Yii::$app->notificationTemplateManager->updateNotificationTypes($model->id, $notificationForm->types);
 
-                return $this->redirect(['view', 'id' => $user->id]);
-            }
-            else {
-                $model->addErrors($user->getErrors());
-            }
+            return $this->redirect(['view', 'id' => $model->id]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        else {
+            return $this->render('create', [
+                'model' => $model,
+                'notifications' => $notifications,
+                'notificationForm' => $notificationForm,
+            ]);
+        }
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Notification model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
+        $data = Yii::$app->request->post();
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->eventBus->trigger(Events::USER_UPDATED_BY_ADMIN, new Event([
-                'sender' => $model,
-            ]));
+        $notifications = Yii::$app->notificationTemplateManager->getNotifications($model->id);
+        $notificationForm = new NotificationForm();
+        $notificationForm->setNotifications($notifications);
+
+        if ($model->load($data) && $notificationForm->load($data) && $model->save()) {
+            Yii::$app->notificationTemplateManager->updateNotificationTypes($model->id, $notificationForm->types);
 
             return $this->redirect(['view', 'id' => $model->id]);
         }
         else {
             return $this->render('update', [
                 'model' => $model,
+                'notifications' => $notifications,
+                'notificationForm' => $notificationForm,
             ]);
         }
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Notification model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -138,15 +140,15 @@ class UserController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Notification model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return Notification the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Notification::findOne($id)) !== null) {
             return $model;
         }
         else {

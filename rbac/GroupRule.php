@@ -40,9 +40,6 @@ class GroupRule extends Rule
             else if ($item->name === Roles::USER) {
                 $result = isset($roles[$item->name]) || isset($roles[Roles::ADMIN]) || isset($roles[Roles::MODERATOR]);
             }
-            else if ($item->name === Roles::GUEST) {
-                $result = isset($roles[$item->name]) || isset($roles[Roles::ADMIN]) || isset($roles[Roles::MODERATOR]) || isset($roles[Roles::USER]);
-            }
 
         }
 

@@ -4,14 +4,14 @@
  * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
  */
 
-namespace app\forms\UserProfile;
+namespace app\forms;
 
 use Yii;
 use yii\base\Model;
 
 /**
  * Class NotificationForm
- * @package app\forms\UserProfile
+ * @package app\forms
  */
 class NotificationForm extends Model
 {

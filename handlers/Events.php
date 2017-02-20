@@ -22,4 +22,6 @@ final class Events
 
     const POST_PUBLISHED = 'post.published';
 
+    const NOTIFICATION = 'notification';
+
 }

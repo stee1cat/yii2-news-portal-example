@@ -16,6 +16,5 @@ final class Roles
     const ADMIN = 'admin';
     const MODERATOR = 'moderator';
     const USER = 'user';
-    const GUEST = 'guest';
 
 }

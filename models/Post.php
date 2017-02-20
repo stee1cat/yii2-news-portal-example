@@ -9,6 +9,7 @@ use Yii;
 use yii\base\Event;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%post}}".
@@ -67,6 +68,7 @@ class Post extends ActiveRecord
             'preview_text' => Yii::t('app/models', 'Preview Text'),
             'detail_text' => Yii::t('app/models', 'Detail Text'),
             'status' => Yii::t('app/models', 'Status'),
+            'url' => Yii::t('app/models', 'URL'),
         ];
     }
 
@@ -79,6 +81,11 @@ class Post extends ActiveRecord
                 'sender' => $this,
             ]));
         }
+    }
+
+    public function getUrl()
+    {
+        return Url::to(['/post/view', 'id' => $this->id], true);
     }
 
     /**

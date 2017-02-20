@@ -7,7 +7,7 @@
 namespace app\controllers;
 
 use app\forms\UserProfile\ChangePasswordForm;
-use app\forms\UserProfile\NotificationForm;
+use app\forms\NotificationForm;
 use app\handlers\Events;
 use app\models\User;
 use app\models\User\Profile;
@@ -87,7 +87,9 @@ class ProfileController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
             if (Yii::$app->userService->updatePassword($user->getId(), $model->new_password)) {
-                $user->trigger(Events::USER_PASSWORD_CHANGED);
+                Yii::$app->eventBus->trigger(Events::USER_PASSWORD_CHANGED, new Event([
+                    'sender' => $user,
+                ]));
             }
 
             Yii::$app->session->setFlash('success', Yii::t('app', 'Password has been changed'));

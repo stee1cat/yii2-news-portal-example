@@ -4,17 +4,18 @@
  * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
  */
 
-namespace app\handlers;
+namespace app\notifications;
 
+use app\handlers\Events;
 use Yii;
 use yii\base\Behavior;
 use yii\base\Event;
 
 /**
- * Class EventBehavior
- * @package app\handlers
+ * Class NotificationEventBehavior
+ * @package app\notifications
  */
-class EventBehavior extends Behavior
+class NotificationEventBehavior extends Behavior
 {
 
     public $events = [];
@@ -30,8 +31,9 @@ class EventBehavior extends Behavior
 
     public function trigger(Event $event)
     {
-        Yii::$app->eventBus->trigger($event->name, new Event([
+        Yii::$app->eventBus->trigger(Events::NOTIFICATION, new NotificationEvent([
             'sender' => $event->sender,
+            'target' => $event,
         ]));
     }
 

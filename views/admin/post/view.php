@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
+ */
+
 use app\models\Post\PostStatus;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -36,8 +40,8 @@ $postStatuses = PostStatus::getOptions();
             'created_at:datetime',
             'updated_at:datetime',
             'title',
-            'preview_text:ntext',
-            'detail_text:ntext',
+            'preview_text:html',
+            'detail_text:html',
             [
                 'attribute' => 'status',
                 'value' => isset($postStatuses[$model->status]) ? $postStatuses[$model->status] : $model->status,

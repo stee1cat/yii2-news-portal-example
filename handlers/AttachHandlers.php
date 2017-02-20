@@ -30,8 +30,8 @@ class AttachHandlers extends Component implements BootstrapInterface
         $application->eventBus->on(Events::USER_CREATED_BY_ADMIN, [$userHander, 'onCreatedByAdmin']);
         $application->eventBus->on(Events::USER_PASSWORD_CHANGED, [$userHander, 'onPasswordChanged']);
 
-        $postHandler = new PostHandler();
-        $application->eventBus->on(Events::POST_PUBLISHED, [$postHandler, 'onPublished']);
+        $notificationHandler = new NotificationHandler();
+        $application->eventBus->on(Events::NOTIFICATION, [$notificationHandler, 'push']);
     }
 
 }

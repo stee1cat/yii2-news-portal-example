@@ -45,6 +45,11 @@ AppAsset::register($this);
                     'visible' => Yii::$app->user->can(Roles::MODERATOR),
                 ],
                 [
+                    'label' => Yii::t('app', 'Уведомления'),
+                    'url' => '/admin/notification',
+                    'visible' => Yii::$app->user->can(Roles::ADMIN),
+                ],
+                [
                     'label' => Yii::t('app', 'Users'),
                     'url' => '/admin/user',
                     'visible' => Yii::$app->user->can(Roles::ADMIN),

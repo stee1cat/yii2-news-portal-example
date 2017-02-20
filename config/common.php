@@ -14,11 +14,12 @@ use app\models\User;
 use app\notifications\BrowserNotificationService;
 use app\notifications\EmailNotificationService;
 use app\notifications\NotificationManager;
+use app\notifications\NotificationTemplateManager;
 use yii\caching\FileCache;
 use yii\i18n\PhpMessageSource;
 use yii\rbac\DbManager;
 
-require '../handlers/Events.php';
+require dirname(__DIR__) . '/handlers/Events.php';
 
 return [
     'language' => 'ru',
@@ -44,6 +45,7 @@ return [
                         'app' => 'app.php',
                         'app/model' => 'app/models.php',
                         'app/notifications' => 'app/notifications.php',
+                        'app/events' => 'app/events.php',
                     ],
                 ],
             ],
@@ -61,11 +63,11 @@ return [
                 User::class => [
                     Events::USER_SIGNUP,
                     Events::USER_CREATED_BY_ADMIN,
-                    Events::USER_UPDATED_BY_ADMIN,
                     Events::USER_PASSWORD_CHANGED,
                 ],
             ],
         ],
+        'notificationTemplateManager' => NotificationTemplateManager::class,
         'notificationManager' => [
             'class' => NotificationManager::class,
             'services' => [

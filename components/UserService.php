@@ -82,7 +82,7 @@ class UserService
             ];
         });
 
-        return ArrayHelper::merge(Yii::$app->notificationManager->getAvailableNotifications(), $notifications);
+        return ArrayHelper::merge(Yii::$app->notificationManager->getAvailableServices(), $notifications);
     }
 
     /**
@@ -121,7 +121,7 @@ class UserService
                 'user_id' => $userId,
             ]);
 
-            $available = Yii::$app->notificationManager->getAvailableNotifications();
+            $available = Yii::$app->notificationManager->getAvailableServices();
 
             foreach ($notifications as $notification) {
                 if (isset($available[$notification])) {
@@ -152,7 +152,7 @@ class UserService
 
     protected function createNotifications(User $user)
     {
-        $notifications = array_filter(Yii::$app->notificationManager->getAvailableNotifications(), function ($notification) {
+        $notifications = array_filter(Yii::$app->notificationManager->getAvailableServices(), function ($notification) {
             return !!$notification['value'];
         });
 

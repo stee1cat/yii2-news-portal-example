@@ -29,4 +29,7 @@ return [
     'Notifications has been updated' => 'Настройки уведомлений были обновлены.',
     'Notification settings' => 'Настройки уведомлений',
     'Password has been changed' => 'Пароль был изменён',
+    'Create Notification' => 'Создать уведомление',
+    'Admins' => 'Администраторы',
+    'Moderators' => 'Модераторы',
 ];

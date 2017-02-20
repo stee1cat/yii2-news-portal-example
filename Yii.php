@@ -5,6 +5,7 @@ use app\components\UserService;
 use app\handlers\EventBus;
 use app\handlers\EventManager;
 use app\notifications\NotificationManager;
+use app\notifications\NotificationTemplateManager;
 
 /**
  * Yii bootstrap file.
@@ -26,6 +27,7 @@ class Yii extends \yii\BaseYii {
  * @property UserService $userService
  * @property PostService $postService
  * @property NotificationManager $notificationManager
+ * @property NotificationTemplateManager $notificationTemplateManager
  * @property EventBus $eventBus
  * @property EventManager $eventManager
  */
