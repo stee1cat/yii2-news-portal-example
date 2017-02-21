@@ -40,6 +40,11 @@ interface NotificationServiceInterface
      */
     public function getDefaultStatus();
 
+    /**
+     * @param User $user
+     * @param Message $message
+     * @return boolean Если уведомление обработано, то необходимо возвратить true
+     */
     public function notify(User $user, Message $message);
 
 }

@@ -18,6 +18,7 @@ use app\notifications\NotificationTemplateManager;
 use yii\caching\FileCache;
 use yii\i18n\PhpMessageSource;
 use yii\rbac\DbManager;
+use yii\swiftmailer\Mailer;
 
 require dirname(__DIR__) . '/handlers/Events.php';
 
@@ -35,6 +36,10 @@ return [
             'itemTable' => 'role',
             'itemChildTable' => 'role_child',
             'ruleTable' => 'rule'
+        ],
+        'mailer' => [
+            'class' => Mailer::class,
+            'useFileTransport' => false,
         ],
         'i18n' => [
             'translations' => [

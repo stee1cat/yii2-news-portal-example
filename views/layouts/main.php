@@ -85,7 +85,7 @@ AppAsset::register($this);
     }
     else {
         $items = array_merge($items, [(
-            '<li>'
+            '<li class="notification-popover">'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(sprintf('%s (%s)', Yii::t('app', 'Logout'), Yii::$app->user->identity->login), [
                 'class' => 'btn btn-link logout',
@@ -117,8 +117,13 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
-
+    <script>
+        var siteConfig = {
+            logged: <?= Yii::$app->user->isGuest ? 0 : 1; ?>
+        };
+    </script>
 <?php $this->endBody() ?>
+    <script src="/js/script.js"></script>
 </body>
 </html>
 <?php $this->endPage() ?>

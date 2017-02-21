@@ -16,6 +16,8 @@ use Yii;
 class BrowserNotificationService implements NotificationServiceInterface
 {
 
+    const NAME = 'browser';
+
     public function getCode()
     {
         return 'browser';
@@ -34,6 +36,8 @@ class BrowserNotificationService implements NotificationServiceInterface
     public function notify(User $user, Message $message)
     {
         // nope
+
+        return true;
     }
 
 }

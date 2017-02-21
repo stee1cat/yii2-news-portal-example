@@ -41,6 +41,8 @@ class EmailNotificationService implements NotificationServiceInterface
             ->setSubject($message->getSubject())
             ->setHtmlBody($message->getText())
             ->send();
+
+        return false;
     }
 
     protected function getFrom()

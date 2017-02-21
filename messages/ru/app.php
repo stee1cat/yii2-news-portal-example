@@ -32,4 +32,8 @@ return [
     'Create Notification' => 'Создать уведомление',
     'Admins' => 'Администраторы',
     'Moderators' => 'Модераторы',
+    'Notification' => 'уведомления',
+    'Send' => 'Отправить',
+    'Sent' => 'Отправлено',
+    'Reset Password' => 'Сброс пароля',
 ];

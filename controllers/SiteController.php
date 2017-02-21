@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\forms\ResendConfirmationCodeForm;
+use app\forms\ResetPasswordForm;
 use app\handlers\Events;
 use app\forms\SignupForm;
 use app\models\Post;
@@ -94,7 +96,14 @@ class SiteController extends Controller
 
         $model = new LoginForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user = $model->getUser();
+
+            if ($user->status == User\UserStatus::INACTIVE()->getValue()) {
+                return $this->redirect(['confirm', 'login' => $user->login]);
+            }
+
+            Yii::$app->user->login($user, $model->rememberMe ? 3600 * 24 * 30 : 0);
             return $this->goBack();
         }
 
@@ -115,6 +124,35 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+    public function actionResetPassword()
+    {
+        $code = Yii::$app->request->get('code');
+        $login = Yii::$app->request->get('login');
+        $model = new ResetPasswordForm();
+
+        if ($login && $code) {
+            $user = User::findOne([
+                'login' => $login,
+                'auth_key' => $code,
+                'status' => User\UserStatus::RESET_PASSWORD()->getValue(),
+            ]);
+
+            if ($user && $model->load(Yii::$app->request->post()) && $model->validate()) {
+                $user->status = User\UserStatus::ACTIVE()->getValue();
+                $user->update();
+
+                Yii::$app->userService->updatePassword($user->id, $model->password);
+                Yii::$app->user->login($user);
+
+                return $this->redirect('/');
+            }
+        }
+
+        return $this->render('reset-password', [
+            'model' => $model,
+        ]);
+    }
+
     public function actionSignup()
     {
         $model = new SignupForm();
@@ -128,7 +166,7 @@ class SiteController extends Controller
                 ]));
             }
 
-            return $this->redirect('confirm');
+            return $this->redirect(['confirm', 'login' => $user->login]);
         }
 
         return $this->render('signup', [
@@ -140,6 +178,10 @@ class SiteController extends Controller
     {
         $code = Yii::$app->request->get('code');
         $login = Yii::$app->request->get('login');
+
+        $form = new ResendConfirmationCodeForm([
+            'login' => $login,
+        ]);
 
         if ($login && $code) {
             $user = User::findOne([
@@ -157,8 +199,24 @@ class SiteController extends Controller
                 return $this->redirect('/');
             }
         }
+        else if ($login && Yii::$app->request->isPost) {
+            $user = User::findOne([
+                'login' => $login,
+                'status' => User\UserStatus::INACTIVE()->getValue(),
+            ]);
 
-        return $this->render('confirm');
+            if ($user) {
+                $user->auth_key = Yii::$app->userService->generateAuthKey();
+                $user->save();
+
+                Yii::$app->session->setFlash('success', 'Новый код уведомления отправлен.');
+                Yii::$app->userService->sendConfirmationCode($user);
+            }
+        }
+
+        return $this->render('confirm', [
+            'model' => $form,
+        ]);
     }
 
 }

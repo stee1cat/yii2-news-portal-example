@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017 Gennadiy Khatuntsev <hg@kamchatka-perm.ru>
+ * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
  */
 
 namespace app\commands;

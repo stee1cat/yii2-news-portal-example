@@ -10,4 +10,5 @@ return [
     'Password Confirm' => 'Подтверждение пароля',
     'New Password Confirm' => 'Подтверждение нового пароля',
     'Old password is incorrect' => 'Неправильный старый пароль',
+    'Password' => 'Пароль',
 ];

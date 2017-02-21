@@ -4,7 +4,6 @@ use app\handlers\AttachHandlers;
 use yii\debug\Module;
 use yii\helpers\ArrayHelper;
 use yii\log\FileTarget;
-use yii\swiftmailer\Mailer;
 
 $params = require(__DIR__ . '/params.php');
 $common = require(__DIR__ . '/common.php');
@@ -28,13 +27,6 @@ $config = ArrayHelper::merge($common, [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => Mailer::class,
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -53,6 +45,7 @@ $config = ArrayHelper::merge($common, [
                 'login' => 'site/login',
                 'signup' => 'site/signup',
                 'confirm' => 'site/confirm',
+                'reset-password' => 'site/reset-password',
 
                 '<_c:[\w\-]+>' => '<_c>/index',
                 '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',

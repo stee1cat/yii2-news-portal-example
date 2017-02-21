@@ -21,6 +21,8 @@ use yii\db\ActiveRecord;
  * @property string $message Message
  * @property integer $status Status
  * @property string $params Params
+ *
+ * @property User $user
  */
 class Message extends ActiveRecord
 {

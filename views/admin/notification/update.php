@@ -15,8 +15,8 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Notification',
-]) . $model->id;
+    'modelClass' => Yii::t('app', 'Notification'),
+]) . Yii::t('app/events', $model->event);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Notifications'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/events', $model->event), 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');

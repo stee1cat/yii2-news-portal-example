@@ -150,6 +150,18 @@ class UserService
         }
     }
 
+    public function sendConfirmationCode(User $user)
+    {
+        Yii::$app->mailer->compose('user-signup', [
+                'login' => $user->login,
+                'code' => $user->auth_key,
+            ])
+            ->setFrom(Yii::$app->params['adminEmail'])
+            ->setTo($user->login)
+            ->setSubject(Yii::t('app/mail', 'Confrim your e-mail address'))
+            ->send();
+    }
+
     protected function createNotifications(User $user)
     {
         $notifications = array_filter(Yii::$app->notificationManager->getAvailableServices(), function ($notification) {

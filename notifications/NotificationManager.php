@@ -7,10 +7,8 @@
 namespace app\notifications;
 
 use app\models\User;
-use app\rbac\Roles;
 use Yii;
 use yii\base\Component;
-use yii\helpers\ArrayHelper;
 
 /**
  * Class NotificationManager
@@ -42,25 +40,26 @@ class NotificationManager extends Component
         $this->notificationServices[$notificationService->getCode()] = $notificationService;
     }
 
-    public function notify(User $user, Message $message)
+    public function notify($service, User $user, Message $message)
     {
-        if (!empty($this->notificationServices)) {
-            $userNotifications = ArrayHelper::map($user->notifications, 'notification', 'id');
+        $result = false;
 
-            foreach ($this->notificationServices as $notificationService) {
-                if (isset($userNotifications[$notificationService->getCode()])) {
-                    $notificationService->notify($user, $message);
-                }
-            }
+        if (!empty($this->notificationServices) && isset($this->notificationServices[$service])) {
+            /** @var NotificationServiceInterface $notificationService */
+            $notificationService = $this->notificationServices[$service];
+
+            $result = $notificationService->notify($user, $message);
         }
+
+        return $result;
     }
 
-    public function notifyAll($role, Message $message)
+    public function notifyAll($service, $role, Message $message)
     {
         $users = User::find()->role($role)->active()->all();
 
         foreach ($users as $user) {
-            $this->notify($user, $message);
+            $this->notify($service, $user, $message);
         }
     }
 
