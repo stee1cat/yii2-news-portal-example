@@ -37,7 +37,7 @@ class BrowserNotificationService implements NotificationServiceInterface
     {
         // nope
 
-        return true;
+        return false;
     }
 
 }

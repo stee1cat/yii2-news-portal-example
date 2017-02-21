@@ -31,7 +31,7 @@ class UserHandler
                 'login' => $user->login,
             ])
             ->setFrom(Yii::$app->params['adminEmail'])
-            ->setTo($user->login)
+            ->setTo(Yii::$app->params['adminEmail'])
             ->setSubject(Yii::t('app/mail', 'New user registration'))
             ->send();
     }

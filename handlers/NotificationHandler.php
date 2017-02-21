@@ -40,7 +40,7 @@ class NotificationHandler
             foreach ($users as $user) {
                 $params = $this->getAttributes($model);
                 $message = Yii::$app->notificationTemplateManager->compile($notification, array_merge($params, [
-                    'login' => $user->login,
+                    '{login}' => $user->login,
                 ]));
 
                 $notificationServices = $this->getActiveNotificationServices($notification->types, 'type');
@@ -68,7 +68,9 @@ class NotificationHandler
     {
         $attributes = [];
         foreach ($model->attributeLabels() as $attribute => $attributeLabel) {
-            $attributes[sprintf('{%s}', $attribute)] = $model->{$attribute};
+            if (isset($model[$attribute])) {
+                $attributes[sprintf('{%s}', $attribute)] = $model->$attribute;
+            }
         }
         return $attributes;
     }

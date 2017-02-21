@@ -7,7 +7,6 @@
 namespace app\models;
 
 use app\models\Notification\Type\TypeQuery;
-use app\rbac\Roles;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -29,8 +28,6 @@ use yii\db\ActiveRecord;
  */
 class Notification extends ActiveRecord
 {
-
-    public $role = Roles::USER;
 
     /**
      * @inheritdoc

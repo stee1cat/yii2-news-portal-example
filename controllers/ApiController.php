@@ -43,15 +43,19 @@ class ApiController extends Controller
 
     protected function findNotifications()
     {
-        $condition = [
-            'user_id' => Yii::$app->user->identity->getId(),
-            'service' => BrowserNotificationService::NAME,
-            'status' => Message\MessageStatus::AWAIT()->getValue(),
-        ];
+        $notifications = [];
 
-        $notifications = Message::find()->select(['subject', 'message'])->where($condition)->asArray()->all();
+        if (!Yii::$app->user->isGuest) {
+            $condition = [
+                'user_id' => Yii::$app->user->identity->getId(),
+                'service' => BrowserNotificationService::NAME,
+                'status' => Message\MessageStatus::AWAIT()->getValue(),
+            ];
 
-        Message::updateAll(['status' => Message\MessageStatus::SENT()->getValue()], $condition);
+            $notifications = Message::find()->select(['subject', 'message'])->where($condition)->asArray()->all();
+
+            Message::updateAll(['status' => Message\MessageStatus::SENT()->getValue()], $condition);
+        }
 
         return $notifications;
     }

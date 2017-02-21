@@ -84,7 +84,7 @@ $this->registerJs($js, View::POS_READY);
         ],
     ]); ?>
 
-    <?= $form->field($notificationForm, 'types')->checkboxList(ArrayHelper::map(Yii::$app->notificationManager->getAvailableServices(), 'code', 'label')); ?>
+    <?= $form->field($notificationForm, 'types')->checkboxList(ArrayHelper::map($notifications, 'code', 'label')); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

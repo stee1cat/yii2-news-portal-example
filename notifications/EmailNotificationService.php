@@ -46,7 +46,7 @@ class EmailNotificationService implements NotificationServiceInterface
                 ->send();
         }
 
-        return false;
+        return true;
     }
 
     protected function getFrom()

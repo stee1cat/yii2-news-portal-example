@@ -163,6 +163,7 @@ class SiteController extends Controller
             $user = Yii::$app->userService->create($model->login, $model->password);
 
             if ($user) {
+                $user->trigger(Events::USER_SIGNUP);
                 Yii::$app->eventBus->trigger(Events::USER_SIGNUP, new Event([
                     'sender' => $user,
                 ]));

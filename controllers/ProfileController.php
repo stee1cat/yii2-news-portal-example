@@ -87,6 +87,7 @@ class ProfileController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
             if (Yii::$app->userService->updatePassword($user->getId(), $model->new_password)) {
+                $user->trigger(Events::USER_PASSWORD_CHANGED);
                 Yii::$app->eventBus->trigger(Events::USER_PASSWORD_CHANGED, new Event([
                     'sender' => $user,
                 ]));

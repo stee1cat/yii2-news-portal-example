@@ -84,6 +84,7 @@ class UserController extends Controller
             $user = Yii::$app->userService->create($model->login);
 
             if ($user) {
+                $user->trigger(Events::USER_CREATED_BY_ADMIN);
                 Yii::$app->eventBus->trigger(Events::USER_CREATED_BY_ADMIN, new Event([
                     'sender' => $user,
                 ]));
