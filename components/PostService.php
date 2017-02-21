@@ -31,11 +31,11 @@ class PostService extends Component
     }
 
     /**
-     * @return Profile|null
+     * @return Profile|null/boolean
      */
     protected function getUserProfile()
     {
-        return Yii::$app->user->identity->profile;
+        return Yii::$app->user->identity ? Yii::$app->user->identity->profile : false;
     }
 
 }
