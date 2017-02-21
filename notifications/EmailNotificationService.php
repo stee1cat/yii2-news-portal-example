@@ -8,6 +8,7 @@ namespace app\notifications;
 
 use app\models\User;
 use Yii;
+use yii\validators\EmailValidator;
 
 /**
  * Class EmailNotificationService
@@ -35,12 +36,15 @@ class EmailNotificationService implements NotificationServiceInterface
 
     public function notify(User $user, Message $message)
     {
-        Yii::$app->mailer->compose()
-            ->setFrom($this->getFrom())
-            ->setTo($user->login)
-            ->setSubject($message->getSubject())
-            ->setHtmlBody($message->getText())
-            ->send();
+        $validator = new EmailValidator();
+        if ($validator->validate($user->login)) {
+            Yii::$app->mailer->compose()
+                ->setFrom($this->getFrom())
+                ->setTo($user->login)
+                ->setSubject($message->getSubject())
+                ->setHtmlBody($message->getText())
+                ->send();
+        }
 
         return false;
     }
