@@ -3,6 +3,8 @@
 namespace app\controllers\admin;
 
 use app\forms\NotificationForm;
+use app\forms\SendNotificationForm;
+use app\notifications\Message;
 use app\rbac\Roles;
 use Yii;
 use app\models\Notification;
@@ -54,6 +56,29 @@ class NotificationController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionSend()
+    {
+        $model = new SendNotificationForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $message = new Message();
+            $message->setSubject($model->subject)
+                ->setText($model->message);
+
+            foreach ($model->services as $service) {
+                Yii::$app->notificationManager->notifyGroup($service, $model->role, $message);
+            }
+
+            Yii::$app->session->setFlash('success', 'Уведомление отправлено.');
+
+            return $this->redirect(['send']);
+        }
+
+        return $this->render('send', [
+            'model' => $model,
         ]);
     }
 

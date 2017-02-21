@@ -4,7 +4,7 @@
  * Copyright (c) 2017 Gennadiy Khatuntsev <e.steelcat@gmail.com>
  */
 
-use app\forms\UserProfile\NotificationForm;
+use app\forms\NotificationForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

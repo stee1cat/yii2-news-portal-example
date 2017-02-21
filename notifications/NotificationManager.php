@@ -6,6 +6,8 @@
 
 namespace app\notifications;
 
+use app\models\Notification;
+use app\models\Notification\Message\MessageStatus;
 use app\models\User;
 use Yii;
 use yii\base\Component;
@@ -54,12 +56,19 @@ class NotificationManager extends Component
         return $result;
     }
 
-    public function notifyAll($service, $role, Message $message)
+    public function notifyGroup($service, $role, Message $message)
     {
         $users = User::find()->role($role)->active()->all();
 
         foreach ($users as $user) {
-            $this->notify($service, $user, $message);
+            $notificationMessage = new Notification\Message([
+                'user_id' => $user->id,
+                'service' => $service,
+                'subject' => $message->getSubject(),
+                'message' => $message->getText(),
+                'status' => MessageStatus::AWAIT()->getValue(),
+            ]);
+            $notificationMessage->save();
         }
     }
 

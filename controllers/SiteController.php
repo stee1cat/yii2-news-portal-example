@@ -70,7 +70,9 @@ class SiteController extends Controller
         $pageSize = Yii::$app->postService->getPageSize();
 
         $posts = new ActiveDataProvider([
-            'query' => Post::find()->published(),
+            'query' => Post::find()->published()->orderBy([
+                'created_at' => SORT_DESC,
+            ]),
             'pagination' => [
                 'pageSize' => $pageSize,
                 'defaultPageSize' => $pageSize,

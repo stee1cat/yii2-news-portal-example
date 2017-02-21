@@ -36,4 +36,5 @@ return [
     'Send' => 'Отправить',
     'Sent' => 'Отправлено',
     'Reset Password' => 'Сброс пароля',
+    'Send Notification' => 'Отправка уведомления',
 ];

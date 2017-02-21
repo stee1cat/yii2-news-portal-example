@@ -11,4 +11,7 @@ return [
     'New Password Confirm' => 'Подтверждение нового пароля',
     'Old password is incorrect' => 'Неправильный старый пароль',
     'Password' => 'Пароль',
+    'Role' => 'Группа',
+    'Subject' => 'Заголовок',
+    'Message' => 'Сообщение',
 ];
