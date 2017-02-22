@@ -68,3 +68,5 @@ PHP >= v5.5, MySQL, cron
 
 * ```myclabs/php-enum``` - для реализации перечислений.
 * ```vova07/yii2-imperavi-widget``` - WYSIWYG редактор.
+
+Отрефакторить, написать тесты, исправить баги.
